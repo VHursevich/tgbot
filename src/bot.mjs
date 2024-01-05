@@ -14,4 +14,4 @@ bot.on("/env", (msg) => msg.reply.text(process.env.VERCEL_ENV));
 
 bot.on("/db", (msg) => msg.reply.text(getMongoClient().then(client => client.db().databaseName)));
 
-export default bot
+bot.start();
