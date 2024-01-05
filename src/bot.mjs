@@ -1,4 +1,6 @@
 import TeleBot from "telebot"
+import mongodb from 'mongodb'
+
 const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN)
 
 bot.on("text", msg => msg.text.startsWith('/')?null:msg.reply.text(msg.text));
