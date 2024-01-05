@@ -9,4 +9,6 @@ bot.on('/start', (msg) => {
     return bot.sendMessage(msg.from.id, `Здравствуйте, ${ msg.from.first_name }!Для подтверждения вашего ТГ аккаунта нажмите "ДА", если вы не желаете авторизовываться, то нажмите кнопку "НЕТ".Вы в любое время сможете подтвердить ваш аккаунт заново.`);
 });
 
+bot.on("/env", (msg) => msg.reply.text(process.env.VERCEL_ENV));
+
 export default bot
