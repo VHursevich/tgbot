@@ -1,5 +1,5 @@
-import TeleBot from "telebot"
-const getMongoClient = require('./db.js');
+import TeleBot from "telebot";
+import getMongoClient from './db.js';
 
 const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN)
 
