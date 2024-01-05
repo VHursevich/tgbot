@@ -1,5 +1,5 @@
 import TeleBot from "telebot"
-import {MongoClient} from 'mongodb'
+import mongo from './db.mjs'
 
 const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN)
 
@@ -12,6 +12,6 @@ bot.on('/start', (msg) => {
 
 bot.on("/env", (msg) => msg.reply.text(process.env.VERCEL_ENV));
 
-bot.on("/db", (msg) => msg.reply.text(MongoClient.connect(process.env.DB_URL).db("Users").databaseName));
+bot.on("/db", (msg) => msg.reply.text(mongo.db().databaseName));
 
 export default bot
