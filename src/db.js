@@ -1,3 +1,7 @@
-import {MongoClient} from 'mongodb';
+const mongodb = require('mongodb')
 
-export default MongoClient.connect(process.env.DB_URL);
+function getMongoClient() {
+  return mongodb.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
+}
+
+module.exports = getMongoClient;
