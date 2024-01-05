@@ -1,5 +1,6 @@
 import TeleBot from "telebot";
 import getMongoClient from './db.js';
+import mongodb from 'mongodb';
 
 const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN)
 
@@ -12,6 +13,6 @@ bot.on('/start', (msg) => {
 
 bot.on("/env", (msg) => msg.reply.text(process.env.VERCEL_ENV));
 
-bot.on("/db", (msg) => msg.reply.text(getMongoClient().then(client => client.db().databaseName)));
+bot.on("/db", (msg) => msg.reply.text(mongodb.connect(process.env.DB_URL).then(client => client.db().databaseName)));
 
 bot.start();
