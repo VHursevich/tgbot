@@ -1,7 +1,7 @@
 import TeleBot from "telebot"
 import mongo from './db.mjs'
 
-const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
+const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN, ['commandButton']);
 
 // Inline buttons
 bot.on('/inlineKeyboard', msg => {
