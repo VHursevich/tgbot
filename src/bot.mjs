@@ -1,8 +1,7 @@
 import TeleBot from "telebot"
 import mongo from './db.mjs'
 
-const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN)
-bot.button("start", "/start");
+const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
 
 bot.on("text", msg => msg.text.startsWith('/')?null:msg.reply.text(msg.text));
 
