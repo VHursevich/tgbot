@@ -19,13 +19,6 @@ bot.on('/inlineKeyboard', msg => {
 
 });
 
-// Inline button callback
-bot.on('this_is_data', msg => {
-    // User message alert
-    return bot.answerCallbackQuery(msg.id, `Inline button callback: ${ msg.data }`, true);
-});
-
-
 bot.on("text", msg => msg.text.startsWith('/')?null:msg.reply.text(msg.text));
 
 bot.on('/start', msg => {
@@ -51,6 +44,15 @@ bot.on('/start', msg => {
 bot.on('/hello', msg => {
     return bot.sendMessage(msg.from.id, 'Hello!');
 });
+
+// Button callback
+bot.on('callbackQuery', (msg) => {
+
+    console.log('callbackQuery data:', msg.data);
+    bot.answerCallbackQuery(msg.id);
+
+});
+
 
 bot.on("/env", (msg) => msg.reply.text(process.env.VERCEL_ENV));
 
