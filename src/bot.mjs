@@ -49,6 +49,6 @@ export default bot;
 async function authorization(msg){
     await mongo.db('test').collection('users').findOne({username: msg.from.username});
 
-    await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {date: new Date()});
+    await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {$set: {date: new Date()}});
 }
 
