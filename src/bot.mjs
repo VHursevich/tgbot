@@ -47,7 +47,7 @@ bot.on("/authorization", async (msg) => {
 export default bot;
 
 async function authorization(username){
-    console.log(1);
+    bot.sendMessage(msg.from.id, `Пользователь ${username} был авторизован`);
     await mongo.db('test').collection('users').findOne({username: username});
 
     await mongo.db('test').collection('users').findOneAndUpdate({username: username}, {date: new Date()});
