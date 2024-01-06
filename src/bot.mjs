@@ -38,7 +38,7 @@ bot.on("/db", (msg) => msg.reply.text(mongo.db().databaseName));
 bot.on("/user", async (msg) => msg.reply.text(JSON.stringify(await fetchUsers())));
 
 bot.on("/myuser", async (msg) => {
-    return bot.sendMessage(msg.from.id, JSON.stringify(msg.from));
+    return bot.sendMessage(msg.from.id, msg.from.username);
 });
 
 export default bot
