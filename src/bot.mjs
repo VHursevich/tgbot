@@ -19,6 +19,12 @@ bot.on('/inlineKeyboard', msg => {
 
 });
 
+// Inline button callback
+bot.on('this_is_data', msg => {
+    // User message alert
+    return bot.answerCallbackQuery(msg.id, `Inline button callback: ${ msg.data }`, true);
+});
+
 
 bot.on("text", msg => msg.text.startsWith('/')?null:msg.reply.text(msg.text));
 
