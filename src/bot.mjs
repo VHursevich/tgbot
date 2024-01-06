@@ -62,14 +62,6 @@ bot.on('/hello', msg => {
     return bot.sendMessage(msg.from.id, 'Hello!');
 });
 
-// Button callback
-bot.on('callbackQuery', (msg) => {
-
-    console.log('callbackQuery data:', msg.data);
-    bot.answerCallbackQuery(msg.id);
-
-});
-
 
 bot.on("/env", (msg) => msg.reply.text(process.env.VERCEL_ENV));
 
