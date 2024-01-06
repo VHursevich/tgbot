@@ -1,7 +1,29 @@
 import TeleBot from "telebot"
 import mongo from './db.mjs'
 
-const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
+const BUTTONS = {
+    hello: {
+        label: '👋 Hello',
+        command: '/hello'
+    },
+    world: {
+        label: '🌍 World',
+        command: '/world'
+    },
+    hide: {
+        label: '⌨️ Hide keyboard',
+        command: '/hide'
+    }
+};
+
+const bot = new TeleBot({token: process.env.TELEGRAM_BOT_TOKEN,
+    usePlugins: ['namedButtons'],
+    pluginConfig: {
+        namedButtons: {
+            buttons: BUTTONS
+        }
+    }
+});
 
 // Inline buttons
 bot.on('/inlineKeyboard', msg => {
