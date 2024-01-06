@@ -17,12 +17,7 @@ const BUTTONS = {
 };
 
 const bot = new TeleBot({token: process.env.TELEGRAM_BOT_TOKEN,
-    usePlugins: ['namedButtons'],
-    pluginConfig: {
-        namedButtons: {
-            buttons: BUTTONS
-        }
-    }
+    usePlugins: ['commandButton']
 });
 
 // Inline buttons
