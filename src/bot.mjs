@@ -3,8 +3,21 @@ import mongo from './db.mjs'
 
 const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
 
-bot.inlineButton('callbackQuery', {callback: 'callbackQuery'});
+// Inline buttons
+bot.on('/inlineKeyboard', msg => {
 
+    let replyMarkup = bot.inlineKeyboard([
+        [
+            bot.inlineButton('callback', {callback: 'this_is_data'}),
+            bot.inlineButton('inline', {inline: 'some query'})
+        ], [
+            bot.inlineButton('url', {url: 'https://telegram.org'})
+        ]
+    ]);
+
+    return bot.sendMessage(msg.from.id, 'Inline keyboard example.', {replyMarkup});
+
+});
 bot.on("text", msg => msg.text.startsWith('/')?null:msg.reply.text(msg.text));
 
 bot.on('/start', (msg) => {    
