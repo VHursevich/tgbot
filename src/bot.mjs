@@ -28,9 +28,23 @@ bot.on('this_is_data', msg => {
 
 bot.on("text", msg => msg.text.startsWith('/')?null:msg.reply.text(msg.text));
 
-bot.on('/start', (msg) => {    
-    msg.reply.photo('http://thecatapi.com/api/images/get')
-    return bot.sendMessage(msg.from.id, `Здравствуйте, ${ msg.from.first_name }!Для подтверждения вашего ТГ аккаунта нажмите "ДА", если вы не желаете авторизовываться, то нажмите кнопку "НЕТ".Вы в любое время сможете подтвердить ваш аккаунт заново.`);
+bot.on('/start', msg => {
+
+    // Inline keyboard markup
+    const replyMarkup = bot.inlineKeyboard([
+        [
+            // First row with command callback button
+            bot.inlineButton('Command button', {callback: '/hello'})
+        ],
+        [
+            // Second row with regular command button
+            bot.inlineButton('Regular data button', {callback: 'hello'})
+        ]
+    ]);
+
+    // Send message with keyboard markup
+    return bot.sendMessage(msg.from.id, 'Example of command button.', {replyMarkup});
+
 });
 
 bot.on("/env", (msg) => msg.reply.text(process.env.VERCEL_ENV));
