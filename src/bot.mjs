@@ -13,8 +13,9 @@ bot.on('/start', msg => {
     const replyMarkup = bot.inlineKeyboard([
         [
             // First row with command callback button
-            bot.inlineButton('Command button', {callback: '/hello'}),
-            bot.inlineButton('Regular data button', {callback: 'hello'})
+            bot.inlineButton('Авторизация', {callback: '/authorization'}),
+        
+            bot.inlineButton('Забыли пароль?', {callback: '/password'})
         ],
         [
             // Second row with regular command button
@@ -28,7 +29,7 @@ bot.on('/start', msg => {
 });
 
 // Command /hello
-bot.on('/hello', msg => {
+bot.on('/hello', async msg => {
     return bot.sendMessage(msg.from.id, 'Hello!');
 });
 
@@ -38,9 +39,16 @@ bot.on("/myuser", async (msg) => {
     return bot.sendMessage(msg.from.id, msg.from.username);
 });
 
+bot.on("/authorization", async (msg) => {
+    await authorization(msg);
+    return bot.sendMessage(msg.from.id, `Пользователь ${msg.from.username} был авторизован`);
+});
+
 export default bot;
 
-async function fetchUsers(){
-    return await mongo.db('test').collection('users').findOne({username: "3130021@gmail.com"});
+async function authorization(msg){
+    await mongo.db('test').collection('users').findOne({username: msg.from.username});
+
+    await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {date: new Date()});
 }
 
