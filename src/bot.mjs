@@ -40,16 +40,16 @@ bot.on("/myuser", async (msg) => {
 });
 
 bot.on("/authorization", async (msg) => {
-    await authorization(msg.from.username);
+    await authorization(msg);
     return bot.sendMessage(msg.from.id, `Пользователь ${msg.from.username} был авторизован`);
 });
 
 export default bot;
 
-async function authorization(username){
-    bot.sendMessage(msg.from.id, `Пользователь ${username} был авторизован`);
-    await mongo.db('test').collection('users').findOne({username: username});
+async function authorization(msg){
+    bot.sendMessage(msg.from.id, `Пользователь ${msg.from.username} был авторизован`);
+    await mongo.db('test').collection('users').findOne({username: msg.from.username});
 
-    await mongo.db('test').collection('users').findOneAndUpdate({username: username}, {date: new Date()});
+    await mongo.db('test').collection('users').findOneAndUpdate({username: msg.from.username}, {date: new Date()});
 }
 
