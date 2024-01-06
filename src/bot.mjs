@@ -19,7 +19,7 @@ bot.on('/start', msg => {
         ],
         [
             // Second row with regular command button
-            bot.inlineButton('Regular data button', {callback: 'hello'})
+            bot.inlineButton('Regular data button', {callback: '/hello'})
         ]
     ]);
 
@@ -47,6 +47,7 @@ bot.on("/authorization", async (msg) => {
 export default bot;
 
 async function authorization(username){
+    console.log(1);
     await mongo.db('test').collection('users').findOne({username: username});
 
     await mongo.db('test').collection('users').findOneAndUpdate({username: username}, {date: new Date()});
