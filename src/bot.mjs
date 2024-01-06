@@ -2,6 +2,7 @@ import TeleBot from "telebot"
 import mongo from './db.mjs'
 
 const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN)
+bot.button("start", "/start");
 
 bot.on("text", msg => msg.text.startsWith('/')?null:msg.reply.text(msg.text));
 
@@ -16,8 +17,10 @@ bot.on("/db", (msg) => msg.reply.text(mongo.db().databaseName));
 
 bot.on("/user", async (msg) => msg.reply.text(JSON.stringify(await fetchUsers())));
 
+
 export default bot
 
 async function fetchUsers(){
-    return await mongo.db('test').collection('users').findOne({email: "3130021@gmail.com"});
+    return await mongo.db('test').collection('users').findOne({username: "3130021@gmail.com"});
 }
+
