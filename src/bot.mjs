@@ -3,6 +3,20 @@ import mongo from './db.mjs'
 
 const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN);
 
+// On commands
+bot.on(['/start', '/back'], msg => {
+
+    let replyMarkup = bot.keyboard([
+        ['/buttons', '/inlineKeyboard'],
+        ['/start', '/hide']
+    ], {resize: true});
+
+    return bot.sendMessage(msg.from.id, 'Keyboard example.', {replyMarkup});
+
+});
+
+
+
 // Inline buttons
 bot.on('/inlineKeyboard', msg => {
 
@@ -18,6 +32,8 @@ bot.on('/inlineKeyboard', msg => {
     return bot.sendMessage(msg.from.id, 'Inline keyboard example.', {replyMarkup});
 
 });
+
+
 bot.on("text", msg => msg.text.startsWith('/')?null:msg.reply.text(msg.text));
 
 bot.on('/start', (msg) => {    
