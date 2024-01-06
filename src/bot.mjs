@@ -47,6 +47,11 @@ bot.on('/start', msg => {
 
 });
 
+// Command /hello
+bot.on('/hello', msg => {
+    return bot.sendMessage(msg.from.id, 'Hello!');
+});
+
 bot.on("/env", (msg) => msg.reply.text(process.env.VERCEL_ENV));
 
 bot.on("/db", (msg) => msg.reply.text(mongo.db().databaseName));
