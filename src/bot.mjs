@@ -23,7 +23,7 @@ bot.on('/start', msg => {
     ]);
 
     // Send message with keyboard markup
-    return bot.sendMessage(msg.from.id, `Здравствуйте, ${msg.from.username}, что вы хотите сделать?`, {startButtons});
+    return bot.sendMessage(msg.from.id, `Здравствуйте, ${msg.from.username}, что вы хотите сделать?`, {replyMarkup: startButtons});
 
 });
 
@@ -42,7 +42,7 @@ bot.on("/askPermission", (msg) => {
         ]
     ]);
 
-    return bot.sendMessage(msg.from.id, `Проверьте ваш username "${msg.from.username}"\nЕсли username верный и вы желаете авторизовать ваш аккаунт на сайте, то нажмите "Да", в ином случае "Нет"`, {askPerButtons});
+    return bot.sendMessage(msg.from.id, `Проверьте ваш username "${msg.from.username}"\nЕсли username верный и вы желаете авторизовать ваш аккаунт на сайте, то нажмите "Да", в ином случае "Нет"`, {replyMarkup: askPerButtons});
 });
 
 bot.on("/AnswerNo", (msg) => {
