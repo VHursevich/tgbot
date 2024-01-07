@@ -12,7 +12,7 @@ const bot = new TeleBot({token: process.env.TELEGRAM_BOT_TOKEN,
 const passwordHash = 'HASHED_PASSWORD'; // Replace with the hashed correct password
 
 bot.on('/password', (msg) => {
-    bot.sendMessage(msg.chat.id, 'Enter password:', {
+    bot.sendMessage(msg.from.id, 'Enter password:', {
         reply_markup: {
             inline_keyboard: [[{
                 text: 'Enter',
