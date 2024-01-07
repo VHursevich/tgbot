@@ -98,7 +98,7 @@ bot.on("/changePass", async (msg) => {
     if(!user)
         return bot.sendMessage(msg.from.id, `Ваш username: ${msg.from.username}\nДанный username не был зарегистрирован на сайте`);
 
-    return bot.sendMessage(msg.id, 'Введите ваш новый пароль размером 5-32 символов, не забывайте его снова!', {ask: 'password'});
+    return bot.sendMessage(msg.from.id, 'Введите ваш новый пароль размером 5-32 символов, не забывайте его снова!', {ask: 'password'});
 });
 
 
