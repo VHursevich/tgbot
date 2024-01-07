@@ -64,12 +64,5 @@ bot.on("/authorization", async (msg) => {
     return bot.sendMessage(msg.from.id, `Пользователь ${msg.from.username} был авторизован.\nНаслаждайтесь сайтом!`);
 });
 
-// Button callback
-bot.on('callbackQuery', (msg) => {
-
-    console.log('callbackQuery data:', msg.data);
-    bot.answerCallbackQuery(msg.id);
-
-});
 
 export default bot;
