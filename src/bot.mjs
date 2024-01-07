@@ -98,18 +98,17 @@ bot.on("/changePass", async (msg) => {
         return bot.sendMessage(msg.from.id, `Ваш username: ${msg.from.username}\nДанный username не был зарегистрирован на сайте`);
 
 
-    bot.sendMessage(msg.from.id, 'Введите ваш новый пароль размером 5-32 символов, не забывайте его снова!');
-
-    // Set the state to expect the password input
-    bot.on('text', (msg) => {
-        const password = msg.text;
-
-        // Respond to the user
-        bot.sendMessage(msg.from.id, `Ваш пароль: ${password}!`);
-    });
-
-
-    return bot.sendMessage(msg.from.id, 'Ваш пароль изменён, теперь можете входить в ваш аккаунт с новым паролем!\nХороших вам сочинений');
+        
+        // Set the state to expect the password input
+        bot.on('text', (msg) => {
+            const password = msg.text;
+            
+            // Respond to the user
+            return bot.sendMessage(msg.from.id, `Ваш пароль: ${password}!\n Ваш пароль изменён, теперь можете входить в ваш аккаунт с новым паролем!\nХороших вам сочинений`);
+        });
+        
+        
+        return bot.sendMessage(msg.from.id, 'Введите ваш новый пароль размером 5-32 символов, не забывайте его снова!');
 });
 
 
