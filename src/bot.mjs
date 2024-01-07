@@ -41,15 +41,13 @@ bot.on("/askPermission", async (msg) => {
             bot.inlineButton('Нет, я пока не хочу авторизовываться!', {callback: '/AnswerNo'}),
         ]
     ]);
-    
+
     return bot.sendMessage(msg.from.id, `Проверьте ваш username "${msg.from.username}"\nЕсли username верный и вы желаете авторизовать ваш аккаунт на сайте, то нажмите "Да", в ином случае "Нет"`, {askPerButtons});
 });
 
 bot.on("/AnswerNo", async (msg) => {
     return bot.sendMessage(msg.from.id, "Если вы захотите авторизоваться или обновить пароль при потере, то обращайтесь.\nХорошего дня!");
 });
-
-bot.on("/user", async (msg) => msg.reply.text(JSON.stringify(await fetchUsers())));
 
 bot.on("/authorization", async (msg) => {
     const user = await mongo.db('test').collection('users').findOne({username: msg.from.username});
