@@ -38,7 +38,7 @@ bot.on("/askPermission", (msg) => {
         ],
     
         [
-            bot.inlineButton('Нет, я пока не хочу авторизовываться!', {callback: '/AnswerNo'}),
+            bot.inlineButton('Нет, я пока не хочу авторизовываться!', {callback: '/answerNo'}),
         ]
     ]);
 
