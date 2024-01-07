@@ -45,7 +45,7 @@ bot.on("/askPermission", (msg) => {
     return bot.sendMessage(msg.from.id, `Проверьте ваш username "${msg.from.username}"\nЕсли username верный и вы желаете авторизовать ваш аккаунт на сайте, то нажмите "Да", в ином случае "Нет"`, {replyMarkup: askPerButtons});
 });
 
-bot.on("/AnswerNo", (msg) => {
+bot.on("/answerNo", (msg) => {
     return bot.sendMessage(msg.from.id, "Если вы захотите авторизоваться или обновить пароль при потере, то обращайтесь.\nХорошего дня!");
 });
 
