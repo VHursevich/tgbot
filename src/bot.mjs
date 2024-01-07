@@ -114,7 +114,7 @@ bot.on('ask.password', async msg => {
 
     await mongo.db('test').collection('tokens').deleteMany({user: new ObjectId(user._id)});
 
-    return bot.sendMessage(msg.from.id, `Размер: ${msg.text}\nВаш пароль изменён, теперь можете входить в ваш аккаунт с новым паролем!\nХороших вам сочинений`);
+    return bot.sendMessage(msg.from.id, `Размер: ${msg.text.lenght}\nВаш пароль изменён, теперь можете входить в ваш аккаунт с новым паролем!\nХороших вам сочинений`);
 
 });
 
