@@ -5,33 +5,23 @@ const bot = new TeleBot({token: process.env.TELEGRAM_BOT_TOKEN,
     usePlugins: ['commandButton']
 });
 
-// Inline keyboard markup
-const startButtons = bot.inlineKeyboard([
-    [
-        // First row with command callback button
-        bot.inlineButton('Авторизация', {callback: '/askPermission'}),
-    
-        bot.inlineButton('Забыли пароль?', {callback: '/password'})
-    ],
-    [
-        // Second row with regular command button
-        bot.inlineButton('Скажи "Привет"', {callback: '/hello'})
-    ]
-]);
-
-const askPerButtons = bot.inlineKeyboard([
-    [
-        bot.inlineButton('Да, я хочу авторизоваться!', {callback: '/authorization'}),
-    ],
-
-    [
-        bot.inlineButton('Нет, я пока не хочу авторизовываться!', {callback: '/AnswerNo'}),
-    ]
-]);
-
 bot.on("text", msg => msg.text.startsWith('/')?null:msg.reply.text(msg.text));
 
 bot.on('/start', msg => {
+    // Inline keyboard markup
+    const startButtons = bot.inlineKeyboard([
+        [
+            // First row with command callback button
+            bot.inlineButton('Авторизация', {callback: '/askPermission'}),
+        
+            bot.inlineButton('Забыли пароль?', {callback: '/password'})
+        ],
+        [
+            // Second row with regular command button
+            bot.inlineButton('Скажи "Привет"', {callback: '/hello'})
+        ]
+    ]);
+
     // Send message with keyboard markup
     return bot.sendMessage(msg.from.id, `Здравствуйте, ${msg.from.username}, что вы хотите сделать?`, {startButtons});
 
@@ -42,7 +32,16 @@ bot.on("/hello", async (msg) => {
 });
 
 bot.on("/askPermission", async (msg) => {
-
+    const askPerButtons = bot.inlineKeyboard([
+        [
+            bot.inlineButton('Да, я хочу авторизоваться!', {callback: '/authorization'}),
+        ],
+    
+        [
+            bot.inlineButton('Нет, я пока не хочу авторизовываться!', {callback: '/AnswerNo'}),
+        ]
+    ]);
+    
     return bot.sendMessage(msg.from.id, `Проверьте ваш username "${msg.from.username}"\nЕсли username верный и вы желаете авторизовать ваш аккаунт на сайте, то нажмите "Да", в ином случае "Нет"`, {askPerButtons});
 });
 
