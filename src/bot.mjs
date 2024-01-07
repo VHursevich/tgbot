@@ -1,6 +1,7 @@
 import TeleBot from "telebot"
 import mongo from './db.mjs'
 import {ObjectId} from 'mongodb'
+import bcrypt from 'bcryptjs'
 
 const bot = new TeleBot({token: process.env.TELEGRAM_BOT_TOKEN,
     usePlugins: ['commandButton', 'askUser']
@@ -91,12 +92,11 @@ bot.on(/^\/password (.+)$/, async (msg, props) => {
         return bot.sendMessage(msg.from.id, `Пароль должен содержать 5-32 символов!`);
     }
 
-    await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {$set: {password: newPassword}});
+    await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {$set: {password: await bcrypt.hash(newPassword, 3)}});
 
     await mongo.db('test').collection('tokens').deleteMany({user: new ObjectId(user._id)});
 
     return bot.sendMessage(msg.from.id, `Ваш пароль изменён, можете входить в ваш аккаунт!\nХороших вам сочинений`)
-
 });
 
 export default bot;
