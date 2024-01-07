@@ -115,7 +115,7 @@ bot.on("/changePass", async (msg) => {
     
     bot.on('text', async (msg) => {
 
-        return bot.sendMessage(msg.from.id, msg.from.text);
+        return bot.sendMessage(msg.from.id, msg.text);
 
     });
 
