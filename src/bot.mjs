@@ -2,7 +2,7 @@ import TeleBot from "telebot"
 import mongo from './db.mjs'
 
 const bot = new TeleBot({token: process.env.TELEGRAM_BOT_TOKEN,
-    usePlugins: ['commandButton']
+    usePlugins: ['commandButton', 'askUser']
 });
 
 bot.on("text", msg => msg.text.startsWith('/')?null:msg.reply.text(msg.text));
@@ -14,7 +14,7 @@ bot.on('/start', msg => {
             // First row with command callback button
             bot.inlineButton('Авторизация', {callback: '/askPermission'}),
         
-            bot.inlineButton('Забыли пароль?', {callback: '/password'})
+            bot.inlineButton('Забыли пароль?', {callback: '/forgetPass'})
         ],
         [
             // Second row with regular command button
@@ -62,6 +62,85 @@ bot.on("/authorization", async (msg) => {
     await mongo.updateOne({username: msg .from.username}, {$set: {date: new Date()}});
 
     return bot.sendMessage(msg.from.id, `Пользователь ${msg.from.username} был авторизован.\nНаслаждайтесь сайтом!`);
+});
+
+bot.on("/forgetPass", async (msg) => {
+    const changePassButtons = bot.inlineKeyboard([
+        [
+            bot.inlineButton('Да, я хочу сменить пароль!', {callback: '/changePass'}),
+        ],
+    
+        [
+            bot.inlineButton('Нет, я не хочу менять пароль!', {callback: '/answerNo'}),
+        ]
+    ]);
+
+    return bot.sendMessage(msg.from.id, `Чтобы сменить пароль нажмите "Новый пароль", в противном случае "Я не хочу менять пароль!"`, {replyMarkup: changePassButtons});
+});
+
+bot.on("/changePass", async (msg) => {
+    const user = await mongo.findOne({username: msg.from.username});
+
+    if(!user)
+        return bot.sendMessage(msg.from.id, `Ваш username: ${msg.from.username}\nДанный username не был зарегистрирован на сайте`);
+
+    if(user.date.getTime() != new Date(0).getTime()){
+        return bot.sendMessage(msg.from.id, `Вы уже были авторизованы на нашем сайте, наслаждайтесь сочинениями!`);
+    }
+
+    await mongo.updateOne({username: msg .from.username}, {$set: {date: new Date()}});
+
+    return bot.sendMessage(msg.from.id, `Пользователь ${msg.from.username} был авторизован.\nНаслаждайтесь сайтом!`);
+});
+
+
+
+
+
+
+
+
+
+
+// On start command
+bot.on('/test', msg => {
+
+    const id = msg.from.id;
+
+    // Ask user name
+    return bot.sendMessage(id, 'What is your name?', {ask: 'name'});
+
+});
+
+// Ask name event
+bot.on('ask.name', msg => {
+
+    const id = msg.from.id;
+    const name = msg.text;
+
+    // Ask user age
+    return bot.sendMessage(id, `Nice to meet you, ${ name }! How old are you?`, {ask: 'age'});
+
+});
+
+// Ask age event
+bot.on('ask.age', msg => {
+
+    const id = msg.from.id;
+    const age = Number(msg.text);
+
+    if (!age) {
+
+        // If incorrect age, ask again
+        return bot.sendMessage(id, 'Incorrect age. Please, try again!', {ask: 'age'});
+
+    } else {
+
+        // Last message (don't ask)
+        return bot.sendMessage(id, `You are ${ age } years old. Great!`);
+
+    }
+
 });
 
 
