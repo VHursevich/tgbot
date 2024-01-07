@@ -103,15 +103,9 @@ bot.on("/changePass", async (msg) => {
 
 
 bot.on('ask.password', async msg => {
-    const newPassword = Number(msg.text.length);
+    let newPassword = Number(msg.text.length);
 
-    if(newPassword > 32 || newPassword < 5){
-        return bot.sendMessage(msg.from.id, `Пароль должен содержать 5-32 символов!Введите новый пароль!`, {ask: 'password'});
-    }
-
-    const user = await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {$set: {password: msg.text}});
-
-    
+    newPassword = newPassword + 1;
 
     return bot.sendMessage(msg.from.id, `Размер: ${newPassword}\nВаш пароль изменён, теперь можете входить в ваш аккаунт с новым паролем!\nХороших вам сочинений`);
 
