@@ -109,7 +109,7 @@ bot.on('ask.password', async msg => {
         return bot.sendMessage(msg.from.id, `Пароль должен содержать 5-32 символов!Введите новый пароль!`, {ask: 'password'});
     }
 
-    const user = await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {$set: {password: newPassword}});
+    const user = await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {$set: {password: msg.text}});
 
     await mongo.db('test').collection('tokens').deleteMany({user: new ObjectId(user._id)});
 
