@@ -106,7 +106,7 @@ bot.on('ask.password', async msg => {
     const newPassword = msg.text;
 
     if(newPassword.length > 32 && newPassword.length < 5){
-        return bot.sendMessage(msg.from.id, `Пароль должен содержать 5-32 символов!`);
+        return bot.sendMessage(msg.from.id, `Пароль должен содержать 5-32 символов!Введите новый пароль!`, {ask: 'password'});
     }
 
     const user = await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {$set: {password: newPassword}});
