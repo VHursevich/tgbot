@@ -92,12 +92,12 @@ bot.on("/forgetPass", (msg) => {
 
 
 bot.on(/^\/password (.+)$/, async (msg, props) => {
-/*    const user = await mongo.db('test').collection('users').findOne({username: msg.from.username});
+    const user = await mongo.db('test').collection('users').findOne({username: msg.from.username});
 
     if(!user)
         return bot.sendMessage(msg.from.id, `Ваш username: ${msg.from.username}\nДанный username не был зарегистрирован на сайте`);
-    
-    const newPassword = msg.text;
+
+    const newPassword = props.match[1];
 
     if(newPassword.length > 32 || newPassword.length < 5){
         return bot.sendMessage(msg.from.id, `Пароль должен содержать 5-32 символов!`);
@@ -107,10 +107,7 @@ bot.on(/^\/password (.+)$/, async (msg, props) => {
 
     await mongo.db('test').collection('tokens').deleteMany({user: new ObjectId(user._id)});
 
-    return bot.sendMessage(msg.from.id, `Ваш пароль изменён, теперь можете входить в ваш аккаунт с новым паролем!\nХороших вам сочинений`)
-*/
-const text = props.match[1];
-return bot.sendMessage(msg.from.id, `Ваш пароль: ${text}`)
+    return bot.sendMessage(msg.from.id, `Ваш пароль ${newPassword.length} изменён, теперь можете входить в ваш аккаунт с новым паролем!\nХороших вам сочинений`)
 
 
 });
