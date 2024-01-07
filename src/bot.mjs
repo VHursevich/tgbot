@@ -27,11 +27,11 @@ bot.on('/start', msg => {
 
 });
 
-bot.on("/hello", async (msg) => {
+bot.on("/hello", (msg) => {
     return bot.sendMessage(msg.from.id, "Привет!");
 });
 
-bot.on("/askPermission", async (msg) => {
+bot.on("/askPermission", (msg) => {
     const askPerButtons = bot.inlineKeyboard([
         [
             bot.inlineButton('Да, я хочу авторизоваться!', {callback: '/authorization'}),
@@ -45,7 +45,7 @@ bot.on("/askPermission", async (msg) => {
     return bot.sendMessage(msg.from.id, `Проверьте ваш username "${msg.from.username}"\nЕсли username верный и вы желаете авторизовать ваш аккаунт на сайте, то нажмите "Да", в ином случае "Нет"`, {askPerButtons});
 });
 
-bot.on("/AnswerNo", async (msg) => {
+bot.on("/AnswerNo", (msg) => {
     return bot.sendMessage(msg.from.id, "Если вы захотите авторизоваться или обновить пароль при потере, то обращайтесь.\nХорошего дня!");
 });
 
