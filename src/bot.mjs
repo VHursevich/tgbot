@@ -8,25 +8,47 @@ const bot = new TeleBot({token: process.env.TELEGRAM_BOT_TOKEN,
 
 
 
+// On start command
 bot.on('/start', msg => {
-    // Inline keyboard markup
-    const startButtons = bot.inlineKeyboard([
-        [
-            // First row with command callback button
-            bot.inlineButton('Авторизация', {callback: '/askPermission'}),
-        
-            bot.inlineButton('Забыли пароль?', {callback: '/forgetPass'})
-        ],
-        [
-            // Second row with regular command button
-            bot.inlineButton('Скажи "Привет"', {callback: '/hello'})
-        ]
-    ]);
 
-    // Send message with keyboard markup
-    return bot.sendMessage(msg.from.id, `Здравствуйте, ${msg.from.username}, что вы хотите сделать?`, {replyMarkup: startButtons});
+    const id = msg.from.id;
+
+    // Ask user name
+    return bot.sendMessage(id, 'What is your name?', {ask: 'name'});
 
 });
+
+// Ask name event
+bot.on('ask.name', msg => {
+
+    const id = msg.from.id;
+    const name = msg.text;
+
+    // Ask user age
+    return bot.sendMessage(id, `Nice to meet you, ${ name }! How old are you?`, {ask: 'age'});
+
+});
+
+// Ask age event
+bot.on('ask.age', msg => {
+
+    const id = msg.from.id;
+    const age = Number(msg.text);
+
+    if (!age) {
+
+        // If incorrect age, ask again
+        return bot.sendMessage(id, 'Incorrect age. Please, try again!', {ask: 'age'});
+
+    } else {
+
+        // Last message (don't ask)
+        return bot.sendMessage(id, `You are ${ age } years old. Great!`);
+
+    }
+
+});
+
 
 
 
