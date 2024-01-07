@@ -8,50 +8,6 @@ const bot = new TeleBot({token: process.env.TELEGRAM_BOT_TOKEN,
 
 
 
-// Secure password storage (example using a hypothetical encryption module)
-const passwordHash = 'HASHED_PASSWORD'; // Replace with the hashed correct password
-
-bot.on('/password', (msg) => {
-    bot.sendMessage(msg.from.id, 'Enter password:', {
-        reply_markup: {
-            inline_keyboard: [[{
-                text: 'Enter',
-                callback_data: 'password_input'
-            }]]
-        }
-    });
-
-});
-
-bot.on('callback_query', (query) => {
-    if (query.data === 'password_input') {
-        bot.editMessageText(query.message.chat.id, query.message.message_id, 'Please type your password:');
-        bot.answerCallbackQuery(query.id); // Hide the button
-
-        bot.on('message', (msg) => {
-            if (msg.chat.id === query.message.chat.id) {
-                const enteredPassword = msg.text;
-                const isPasswordCorrect = validatePassword(enteredPassword); // Validate using your preferred method
-
-                if (isPasswordCorrect) {
-                    bot.sendMessage(msg.chat.id, 'Password is correct!');
-                } else {
-                    bot.sendMessage(msg.chat.id, 'Incorrect password. Please try again.');
-                }
-
-                bot.removeListener('message', this); // Remove the temporary message listener
-            }
-        });
-    }
-});
-
-function validatePassword(enteredPassword) {
-    // Example using a hypothetical encryption module
-    const enteredPasswordHash = encryptPassword(enteredPassword);
-    return enteredPasswordHash === passwordHash;
-}
-
-/*
 bot.on('/start', msg => {
     // Inline keyboard markup
     const startButtons = bot.inlineKeyboard([
@@ -157,8 +113,13 @@ bot.on("/changePass", async (msg) => {
 
     });
     
-    
+    bot.on('text', async (msg) => {
+
+        return bot.sendMessage(msg.from.id, msg.from.text);
+
+    });
+
     return bot.sendMessage(msg.from.id, 'Введите ваш новый пароль размером 5-32 символов, не забывайте его снова!');
 });
-*/
+
 export default bot;
