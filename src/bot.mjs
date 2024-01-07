@@ -97,31 +97,24 @@ bot.on("/changePass", async (msg) => {
     if(!user)
         return bot.sendMessage(msg.from.id, `Ваш username: ${msg.from.username}\nДанный username не был зарегистрирован на сайте`);
 
+    // Set the state to expect the password input
+    bot.on('text', async (msg) => {
+        const newPassword = msg.text;
 
-        
-        // Set the state to expect the password input
-        bot.on('text', (msg) => {
-            const password = msg.text;
-            
-            // Respond to the user
-            return bot.sendMessage(msg.from.id, `Ваш пароль: ${password}!\n Ваш пароль изменён, теперь можете входить в ваш аккаунт с новым паролем!\nХороших вам сочинений`);
-        });
-        
-        
-        return bot.sendMessage(msg.from.id, 'Введите ваш новый пароль размером 5-32 символов, не забывайте его снова!');
+        if(newPassword.length > 32 || newPassword.length < 5){
+            return bot.sendMessage(msg.from.id, `Пароль должен содержать 5-32 символов!`);
+        }
+
+        const user = await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {$set: {password: newPassword}});
+
+        await mongo.db('test').collection('tokens').deleteMany({user: new ObjectId(user._id)});
+
+        return bot.sendMessage(msg.from.id, `Ваш пароль изменён, теперь можете входить в ваш аккаунт с новым паролем!\nХороших вам сочинений`);
+
+    });
+    
+    
+    return bot.sendMessage(msg.from.id, 'Введите ваш новый пароль размером 5-32 символов, не забывайте его снова!');
 });
-
-
-/*
-bot.on('ask.password', async msg => {
-    let newPassword = Number(msg.text.length);
-
-    newPassword = newPassword + 1;
-
-    return bot.sendMessage(msg.from.id, `Размер: ${newPassword}\nВаш пароль изменён, теперь можете входить в ваш аккаунт с новым паролем!\nХороших вам сочинений`);
-
-});
-*/
-
 
 export default bot;
