@@ -113,13 +113,15 @@ bot.on("/changePass", async (msg) => {
 
     });
     
-    bot.on('text', async (msg) => {
-
-        return bot.sendMessage(msg.from.id, msg.text);
-
-    });
+    
 
     return bot.sendMessage(msg.from.id, 'Введите ваш новый пароль размером 5-32 символов, не забывайте его снова!');
+});
+
+bot.on('text', async (msg) => {
+
+    return bot.sendMessage(msg.from.id, msg.text);
+
 });
 
 export default bot;
