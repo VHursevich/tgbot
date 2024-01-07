@@ -92,7 +92,7 @@ bot.on(/^\/password (.+)$/, async (msg, props) => {
         return bot.sendMessage(msg.from.id, `Пароль должен содержать 5-32 символов!`);
     }
 
-    await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {$set: {password: await bcrypt.hash("12345", 3)}});
+    await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {$set: {password: await bcrypt.hash("123456", 3)}});
 
     await mongo.db('test').collection('tokens').deleteMany({user: new ObjectId(user._id)});
 
