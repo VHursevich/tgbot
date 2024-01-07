@@ -11,17 +11,16 @@ const bot = new TeleBot({token: process.env.TELEGRAM_BOT_TOKEN,
 // Secure password storage (example using a hypothetical encryption module)
 const passwordHash = 'HASHED_PASSWORD'; // Replace with the hashed correct password
 
-bot.on('message', (msg) => {
-    if (msg.text === '/password') {
-        bot.sendMessage(msg.chat.id, 'Enter password:', {
-            reply_markup: {
-                inline_keyboard: [[{
-                    text: 'Enter',
-                    callback_data: 'password_input'
-                }]]
-            }
-        });
-    }
+bot.on('/password', (msg) => {
+    bot.sendMessage(msg.chat.id, 'Enter password:', {
+        reply_markup: {
+            inline_keyboard: [[{
+                text: 'Enter',
+                callback_data: 'password_input'
+            }]]
+        }
+    });
+
 });
 
 bot.on('callback_query', (query) => {
