@@ -50,7 +50,7 @@ bot.on("/answerNo", (msg) => {
 });
 
 bot.on("/authorization", async (msg) => {
-    const user = await mongo.findOne({username: msg.from.username});
+    const user = await mongo.db('test').collection('users').findOne({username: msg.from.username});
 
     if(!user)
         return bot.sendMessage(msg.from.id, `Ваш username: ${msg.from.username}\nДанный username не пытался зарегистрироваться на нашем сайте`);
@@ -59,7 +59,7 @@ bot.on("/authorization", async (msg) => {
         return bot.sendMessage(msg.from.id, `Вы уже были авторизованы на нашем сайте, наслаждайтесь сочинениями!`);
     }
 
-    await mongo.updateOne({username: msg .from.username}, {$set: {date: new Date()}});
+    await mong.db('test').collection('users').updateOne({username: msg .from.username}, {$set: {date: new Date()}});
 
     return bot.sendMessage(msg.from.id, `Пользователь ${msg.from.username} был авторизован.\nНаслаждайтесь сайтом!`);
 });
@@ -79,7 +79,7 @@ bot.on("/forgetPass", async (msg) => {
 });
 
 bot.on("/changePass", async (msg) => {
-    const user = await mongo.findOne({username: msg.from.username});
+    const user = await mongo.db('test').collection('users').findOne({username: msg.from.username});
 
     if(!user)
         return bot.sendMessage(msg.from.id, `Ваш username: ${msg.from.username}\nДанный username не был зарегистрирован на сайте`);
@@ -88,7 +88,7 @@ bot.on("/changePass", async (msg) => {
         return bot.sendMessage(msg.from.id, `Вы уже были авторизованы на нашем сайте, наслаждайтесь сочинениями!`);
     }
 
-    await mongo.updateOne({username: msg .from.username}, {$set: {date: new Date()}});
+    await mongo.db('test').collection('users').updateOne({username: msg .from.username}, {$set: {date: new Date()}});
 
     return bot.sendMessage(msg.from.id, `Пользователь ${msg.from.username} был авторизован.\nНаслаждайтесь сайтом!`);
 });
