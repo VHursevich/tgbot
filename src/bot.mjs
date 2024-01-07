@@ -40,23 +40,18 @@ bot.on("/myuser", async (msg) => {
 });
 
 bot.on("/authorization", async (msg) => {
-
-    await authorization(msg);
-    return bot.sendMessage(msg.from.id, `Пользователь ${msg.from.username} был авторизован`);
-});
-
-export default bot;
-
-async function authorization(msg){
     const user = await mongo.db('test').collection('users').findOne({username: msg.from.username});
 
     if(!user)
         return bot.sendMessage(msg.from.id, `Ваш username: ${msg.from.username}\nДанный username не пытался зарегистрироваться на нашем сайте`);
 
-    if(user.date.getTime() != new Date(0).getTime()){
-        return bot.sendMessage(msg.from.id, `Вы уже были зарегистривованы на нашем сайте!`);
+    if(user.date != new Date(0)){
+        return bot.sendMessage(msg.from.id, `Вы уже были авторизованы на нашем сайте, наслаждайтесь сочинениями!`);
     }
 
     await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {$set: {date: new Date()}});
-}
 
+    return bot.sendMessage(msg.from.id, `Пользователь ${msg.from.username} был авторизован`);
+});
+
+export default bot;
