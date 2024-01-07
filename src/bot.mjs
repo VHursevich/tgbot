@@ -101,7 +101,7 @@ bot.on("/changePass", async (msg) => {
     bot.sendMessage(msg.from.id, 'Введите ваш новый пароль размером 5-32 символов, не забывайте его снова!');
 
     // Set the state to expect the password input
-    bot.once('text', (msg) => {
+    bot.on('text', (msg) => {
         const password = msg.text;
 
         // Respond to the user
