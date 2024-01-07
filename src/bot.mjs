@@ -103,7 +103,7 @@ bot.on("/changePass", async (msg) => {
 
 
 bot.on('ask.password', async msg => {
-    const newPassword = msg.text;
+    const newPassword = Number(msg.text.length);
 
     if(newPassword.length > 32 && newPassword.length < 5){
         return bot.sendMessage(msg.from.id, `Пароль должен содержать 5-32 символов!Введите новый пароль!`, {ask: 'password'});
