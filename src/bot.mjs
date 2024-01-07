@@ -76,20 +76,8 @@ bot.on("/authorization", async (msg) => {
 
 
 bot.on("/forgetPass", (msg) => {
-    const changePassButtons = bot.inlineKeyboard([
-        [
-            bot.inlineButton('Да, я хочу сменить пароль!', {callback: '/changePass'}),
-        ],
-    
-        [
-            bot.inlineButton('Нет, я не хочу менять пароль!', {callback: '/answerNo'}),
-        ]
-    ]);
-
-    return bot.sendMessage(msg.from.id, `Чтобы сменить пароль нажмите "Новый пароль", в противном случае "Я не хочу менять пароль!"`, {replyMarkup: changePassButtons});
+    return bot.sendMessage(msg.from.id, `Чтобы сменить пароль введите команду "/password <новый пароль>" без стрелочек!"`);
 });
-
-
 
 bot.on(/^\/password (.+)$/, async (msg, props) => {
     const user = await mongo.db('test').collection('users').findOne({username: msg.from.username});
@@ -107,8 +95,7 @@ bot.on(/^\/password (.+)$/, async (msg, props) => {
 
     await mongo.db('test').collection('tokens').deleteMany({user: new ObjectId(user._id)});
 
-    return bot.sendMessage(msg.from.id, `Ваш пароль ${newPassword.length} изменён, теперь можете входить в ваш аккаунт с новым паролем!\nХороших вам сочинений`)
-
+    return bot.sendMessage(msg.from.id, `Ваш пароль изменён, можете входить в ваш аккаунт!\nХороших вам сочинений`)
 
 });
 
