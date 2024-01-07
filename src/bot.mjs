@@ -6,7 +6,6 @@ const bot = new TeleBot({token: process.env.TELEGRAM_BOT_TOKEN,
     usePlugins: ['commandButton', 'askUser']
 });
 
-bot.on("text", msg => msg.text.startsWith('/')?null:msg.reply.text(msg.text));
 
 
 bot.on('/start', msg => {
