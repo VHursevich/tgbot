@@ -51,8 +51,11 @@ async function authorization(msg){
     const user = await mongo.db('test').collection('users').findOne({username: msg.from.username});
 
     if(!user)
-        return bot.sendMessage(msg.from.id, `Ваш username: ${msg.from.username}\n Данный username не пытался зарегистрироваться на нашем сайте`);
+        return bot.sendMessage(msg.from.id, `Ваш username: ${msg.from.username}\nДанный username не пытался зарегистрироваться на нашем сайте`);
 
+    if(user.date.getTime() == new Date(0).getTime()){
+        return bot.sendMessage(msg.from.id, `Вы уже были зарегистривованы на нашем сайте!`);
+    }
 
     await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {$set: {date: new Date()}});
 }
