@@ -91,7 +91,7 @@ bot.on("/forgetPass", (msg) => {
 
 
 
-bot.on("/changePass", async (msg) => {
+bot.onText("/changePass", async (msg) => {
     const user = await mongo.db('test').collection('users').findOne({username: msg.from.username});
 
     if(!user)
