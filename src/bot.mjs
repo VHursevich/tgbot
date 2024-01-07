@@ -124,14 +124,7 @@ bot.on("/changePass", async (msg) => {
 
 
 
-bot.on('ask.password', async msg => {
-    let newPassword = Number(msg.text.length);
 
-    newPassword = newPassword + 1;
-
-    return bot.sendMessage(msg.from.id, `Размер: ${newPassword}\nВаш пароль изменён, теперь можете входить в ваш аккаунт с новым паролем!\nХороших вам сочинений`);
-
-});
 
 
 
