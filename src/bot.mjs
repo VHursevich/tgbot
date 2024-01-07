@@ -40,6 +40,7 @@ bot.on("/myuser", async (msg) => {
 });
 
 bot.on("/authorization", async (msg) => {
+
     await authorization(msg);
     return bot.sendMessage(msg.from.id, `Пользователь ${msg.from.username} был авторизован`);
 });
@@ -47,7 +48,11 @@ bot.on("/authorization", async (msg) => {
 export default bot;
 
 async function authorization(msg){
-    await mongo.db('test').collection('users').findOne({username: msg.from.username});
+    const user = await mongo.db('test').collection('users').findOne({username: msg.from.username});
+
+    if(!user)
+        return bot.sendMessage(msg.from.id, `Ваш username: ${msg.from.username}\n Данный username не пытался зарегистрироваться на нашем сайте`);
+
 
     await mongo.db('test').collection('users').updateOne({username: msg.from.username}, {$set: {date: new Date()}});
 }
