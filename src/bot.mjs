@@ -6,45 +6,31 @@ const bot = new TeleBot({token: process.env.TELEGRAM_BOT_TOKEN,
     usePlugins: ['commandButton', 'askUser']
 });
 
+// Define a regular expression pattern for the password command
+const passwordCommand = /^\/password$/;
 
-// On start command
-bot.on('/start', msg => {
+// Event listener for incoming messages
+bot.on('text', (msg) => {
+  const chatId = msg.chat.id;
+  const text = msg.text;
 
-    const id = msg.from.id;
-
-    // Ask user name
-    return bot.sendMessage(id, 'What is your name?', {ask: 'name'});
-
+  // Check if the message matches the password command
+  if (passwordCommand.test(text)) {
+    // Ask the user for a password
+    bot.sendMessage(chatId, 'Please enter your password:', {ask: 'password'});
+  }
 });
 
-// Ask name event
-bot.on('ask.name', msg => {
+// Event listener for password input
+bot.on('ask.password', (msg) => {
+  const chatId = msg.chat.id;
+  const password = msg.text;
 
-    const id = msg.from.id;
-    const name = msg.text;
+  // Process the password (you can add your validation logic here)
+  // For example, you can check if the password meets certain criteria
 
-    // Ask user age
-    return bot.sendMessage(id, `Nice to meet you, ${ name }! How old are you?`, {ask: 'age'});
-
+  // Respond to the user
+  bot.sendMessage(chatId, `You entered the password: ${password}`);
 });
 
-// Ask age event
-bot.on('ask.age', msg => {
-
-    const id = msg.from.id;
-    const age = Number(msg.text);
-
-    if (!age) {
-
-        // If incorrect age, ask again
-        return bot.sendMessage(id, 'Incorrect age. Please, try again!', {ask: 'age'});
-
-    } else {
-
-        // Last message (don't ask)
-        return bot.sendMessage(id, `You are ${ age } years old. Great!`);
-
-    }
-
-});
 export default bot;
