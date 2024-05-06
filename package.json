@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "mongodb": "^6.3.0",
+    "mongodb": "^6.6.0",
     "telebot": "^1.4.1",
     "telebot-vercel": "^1.0.1"
   },
